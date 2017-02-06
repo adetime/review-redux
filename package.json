@@ -5,10 +5,21 @@
   "author": null,
   "private": true,
   "main": "main.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "jest": {
+    "preset": "jest-exponent"
+  },
   "dependencies": {
     "@exponent/vector-icons": "~4.0.0",
     "exponent": "^13.1.0",
     "react": "~15.4.0",
     "react-native": "https://github.com/exponent/react-native/archive/sdk-13.0.3.tar.gz"
+  },
+  "devDependencies": {
+    "jest-cli": "^18.1.0",
+    "jest-exponent": "^0.2.0"
   }
 }
