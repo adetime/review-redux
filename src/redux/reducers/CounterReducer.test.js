@@ -1,10 +1,10 @@
-import {counter} from './';
+import CounterReducer from './CounterReducer';
 
 describe('actions', () => {
   it('Increments from 0 to 1', () => {
 
     expect(
-      counter(0, { type: 'INCREMENT' })
+      CounterReducer(0, { type: 'INCREMENT' })
     ).toBe(1)
 
   })
@@ -12,7 +12,7 @@ describe('actions', () => {
   it('Increments from 1 to 2', () => {
 
     expect(
-      counter(1, { type: 'INCREMENT' })
+      CounterReducer(1, { type: 'INCREMENT' })
     ).toBe(2)
 
   })
@@ -21,7 +21,7 @@ describe('actions', () => {
   it('Decrements from 2 to 1 ', () => {
 
       expect(
-      counter(2, { type: 'DECREMENT' })
+      CounterReducer(2, { type: 'DECREMENT' })
     ).toBe(1)
 
   })
@@ -29,7 +29,7 @@ describe('actions', () => {
   it('Returns the current state of the application', () => {
 
       expect(
-      counter(1, { type: 'ANYTHING_ELSE' })
+      CounterReducer(1, { type: 'ANYTHING_ELSE' })
     ).toBe(1)
 
   })
@@ -37,7 +37,7 @@ describe('actions', () => {
   it('Starts with the initial state of the application', () => {
 
       expect(
-      counter(undefined, { })
+      CounterReducer(undefined, { })
     ).toBe(0)
 
   })
@@ -46,10 +46,3 @@ describe('actions', () => {
 
 
 })
-
-
-/*
-
-console.log('tests passed!')
-
-*/

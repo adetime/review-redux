@@ -6,11 +6,60 @@ import {
   View,
 } from 'react-native';
 
+import { createStore } from 'redux';
+
+import CounterApp from './src/view/CounterApp';
+import reducers from './src/redux/reducers';
+
+// Create a store for counter reducer example
+const store = createStore(reducers);
+
+
 class App extends React.Component {
+
+  componentWillMount(){
+    store.subscribe(this.update)
+  }
+
+  update = () => {
+    this.forceUpdate();
+  }
+
+  onPressIncrement = ( ) => {
+
+    console.log('Previous state ----------', store.getState())
+
+    store.dispatch({ type: 'INCREMENT' });
+
+    console.log('Next state ----------', store.getState())
+  }
+
+
+  onPressDecrement = () => {
+
+    console.log('Previous state ----------', store.getState())
+
+    store.dispatch({ type: 'DECREMENT' });
+
+    console.log('Next state ----------', store.getState())
+  }
+
+
   render() {
+
+    const { value, logs } = store.getState();
+
+    console.log('logs', logs)
+
     return (
       <View style={styles.container}>
-        <Text>Open up main.js to start working on your app!</Text>
+
+        <CounterApp
+          value={value}
+          onPressIncrement={this.onPressIncrement}
+          onPressDecrement={this.onPressDecrement}
+        />
+
       </View>
     );
   }
