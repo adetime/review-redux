@@ -27,37 +27,30 @@ class App extends React.Component {
 
   onPressIncrement = ( ) => {
 
-    console.log('Previous state ----------', store.getState())
-
     store.dispatch({ type: 'INCREMENT' });
-
-    console.log('Next state ----------', store.getState())
   }
 
 
   onPressDecrement = () => {
 
-    console.log('Previous state ----------', store.getState())
-
     store.dispatch({ type: 'DECREMENT' });
-
-    console.log('Next state ----------', store.getState())
   }
 
 
   render() {
 
-    const { value, logs } = store.getState();
+    const { value } = store.getState();
 
-    console.log('logs', logs)
+    console.log('value', value)
 
     return (
       <View style={styles.container}>
 
         <CounterApp
-          value={value}
+          value={value.current}
           onPressIncrement={this.onPressIncrement}
           onPressDecrement={this.onPressDecrement}
+          logs={value.logs}
         />
 
       </View>

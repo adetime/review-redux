@@ -1,23 +1,16 @@
+import TodoReducer from './TodoReducer';
+
 export default TodosListReducer = ( state = [], action ) => {
 
   switch (action.type) {
     case 'ADD_TODO':
       return [
         ...state,
-        {
-          id: action.id,
-          text: action.text,
-          completed: false
-        }
+        TodoReducer(undefined, action)
       ];
 
     case 'TOGGLE_TODO':
-      return state.map( todo => {
-        if (todo.id === action.id) {
-          return { ...todo, completed: !todo.completed };
-        }
-        return todo;
-      });
+      return state.map( todo => TodoReducer(todo, action) );
 
     default:
       return state;

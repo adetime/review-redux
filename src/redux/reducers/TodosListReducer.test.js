@@ -1,7 +1,12 @@
+import { createStore } from 'redux';
 import deepFreeze from 'deep-freeze';
 import TodosListReducer from './TodosListReducer'
 
+const store = createStore( TodosListReducer );
+
+
 describe('Todos List Reducer', () => {
+
 
   it('Adds first todo', () => {
     const stateBefore = [];
@@ -24,6 +29,7 @@ describe('Todos List Reducer', () => {
     expect(
       TodosListReducer(stateBefore, action)
     ).toEqual(stateAfter)
+
 
   });
 
@@ -68,6 +74,68 @@ describe('Todos List Reducer', () => {
     ).toEqual(stateAfter)
 
   });
+
+  // Check logs with store
+  console.log(
+    "Initial State:",
+    store.getState(),
+    "\n-----------------"
+  )
+
+  console.log(
+    "Dispatching ADD_TODO:",
+    "\n-----------------"
+  )
+  store.dispatch(
+    {
+      type: 'ADD_TODO',
+      id: 0,
+      text: 'Learn Redux From Beginer to Advancers',
+    }
+  );
+
+  console.log(
+    "Current State:",
+    store.getState(),
+    "\n-----------------"
+  )
+
+  console.log(
+    "Dispatching ADD_TODO:",
+    "\n-----------------"
+  )
+  store.dispatch(
+    {
+      type: 'ADD_TODO',
+      id: 1,
+      text: 'Buy a book',
+    }
+  );
+
+  console.log(
+    "Current State:",
+    store.getState(),
+    "\n-----------------"
+  )
+
+  console.log(
+    "Dispatching TOGGLE_TODO:",
+    "\n-----------------"
+  )
+  store.dispatch(
+    {
+      type: 'TOGGLE_TODO',
+      id: 0,
+    }
+  );
+
+  console.log(
+    "Current State:",
+    store.getState(),
+    "\n-----------------"
+  )
+
+
 
 
 

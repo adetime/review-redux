@@ -1,11 +1,13 @@
-export default LoggerReducer = (state = [], action) => {
-  
+
+
+export default LoggerReducer = (state, action) => {
+
   switch (action.type) {
     case "INCREMENT":
-      return [...state, { type: action.type, payload: action.payload }];
+      return { actionDispatched: action.type, previous: action.payload, new: action.payload + 1};
     case "DECREMENT":
-      return [...state, { type: action.type, payload: action.payload }];
+      return { actionDispatched: action.type, previous: action.payload, new: action.payload - 1 };
     default:
-      return state;
+      return { actionDispatched: 'INITIAL_STATE', previous: 0, new: 0 };
   }
 }
