@@ -5,6 +5,7 @@ import {
   TouchableHighlight,
   StyleSheet,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -28,7 +29,6 @@ const styles = StyleSheet.create({
     width: width,
     borderWidth: 7,
     borderColor: 'yellow',
-    paddingHorizontal: 20,
     alignItems: 'center'
   },
   logsRow: {
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     width: width,
     justifyContent: 'space-around',
     marginTop: 10,
-
+    
   },
   button: {
     width: 100,
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
   previousText: {
     color: 'gray',
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
   },
   newText: {
     color: 'green',
+    textAlign: 'center',
   },
   test: {
     backgroundColor: 'blue',
@@ -101,13 +103,13 @@ const renderLogs = (logs) => {
     return (
       <View key={numberOfLogs++} style={logsRow}>
         <Text style={previousText}>
-          {`Previous state: ${log.previous}`}
+          {`${log.previous}`}
         </Text>
         <Text style={actionText}>
-          {`Action dispatched: ${log.actionDispatched}`}
+          {`${log.actionDispatched}`}
         </Text>
         <Text style={newText}>
-          {`New state: ${log.new}`}
+          {`${log.new}`}
         </Text>
       </View>
     );
@@ -147,7 +149,21 @@ const CounterApp = ({
         </View>
         <View style={logsContainer}>
           <Text style={{fontSize: 22}}>LOGS</Text>
+          <View style={logsRow}>
+            <Text style={previousText}>
+              Prev. state:
+            </Text>
+            <Text style={actionText}>
+              Action dispatched:
+            </Text>
+            <Text style={newText}>
+              New state:
+            </Text>
+          </View>
+          <ScrollView>
           {renderLogs(logs)}
+          </ScrollView>
+
         </View>
       </View>
 
