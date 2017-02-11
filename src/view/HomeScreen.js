@@ -30,24 +30,29 @@ class HomeScreen extends Component {
     title: 'Redux Playground',
   };
 
-  onPress = () => {
+  onPress = (routeName) => {
     const { navigate } = this.props.navigation;
 
-    return navigate('Counter', { user: 'Adeildo' });
+    return navigate(routeName, { user: 'Adeildo' });
   }
 
 
   render() {
 
     const { container, title, call } = styles;
+    const { params } = this.props.navigation.state;
 
     return (
       <View style={container}>
         <Text style={title}>Redux Playground</Text>
         <Text style={call}>Choose one app...</Text>
         <ScrollView>
-          <TouchableWithoutFeedback onPress={this.onPress}>
-            <View><Text>Counter-Logger</Text></View>
+          <TouchableWithoutFeedback onPress={()=>this.onPress('Counter')}>
+            <View style={{marginBottom: 30}}><Text>Counter-Logger</Text></View>
+          </TouchableWithoutFeedback>
+
+          <TouchableWithoutFeedback onPress={()=>this.onPress('Todo')}>
+            <View style={{marginBottom: 30}}><Text>Simple Todo</Text></View>
           </TouchableWithoutFeedback>
 
         </ScrollView>

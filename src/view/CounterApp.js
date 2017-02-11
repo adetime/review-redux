@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     width: width,
     justifyContent: 'space-around',
     marginTop: 10,
-    
+
   },
   button: {
     width: 100,
@@ -93,7 +93,7 @@ const {
   decrement,
   textInteraction,
   resultContainer,
-  test
+  test,
 } = styles;
 
 
@@ -120,7 +120,8 @@ const CounterApp = ({
   value,
   onPressIncrement,
   onPressDecrement,
-  logs
+  logs,
+  user
 }) => {
 
 
@@ -148,7 +149,7 @@ const CounterApp = ({
 
         </View>
         <View style={logsContainer}>
-          <Text style={{fontSize: 22}}>LOGS</Text>
+          <Text style={{fontSize: 22}}>{`${user}'s LOGS`}</Text>
           <View style={logsRow}>
             <Text style={previousText}>
               Prev. state:

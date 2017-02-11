@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 import CounterReducer from './CounterReducer';
-//import LoggerReducer from './LoggerReducer';
+import TodosListReducer from './TodosListReducer'
+
 
 export default combineReducers({
   value: CounterReducer,
-  //logs: LoggerReducer
+  todos: TodosListReducer,
 });

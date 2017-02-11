@@ -7,16 +7,21 @@ import {
 
 import { createStore } from 'redux';
 
-import CounterApp from './CounterApp';
+import TodoApp from './TodoApp';
 import reducers from './../redux/reducers';
 
 // Create a store for counter reducer example
 const store = createStore(reducers);
 
 
-class CounterScreen extends React.Component {
+class TodoScreen extends React.Component {
   static navigationOptions = {
-    title: ({ state }) => `${state.params.user}, test this counter`,
+    title: ({ state }) => `${state.params.user}, test this todo`,
+  };
+
+  state = {
+    text: '',
+    id: 0,
   };
 
   componentWillMount(){
@@ -27,23 +32,29 @@ class CounterScreen extends React.Component {
     this.forceUpdate();
   }
 
-  onPressIncrement = ( ) => {
+  onPressAdd = ( ) => {
 
-    store.dispatch({ type: 'INCREMENT' });
+    store.dispatch({ type: 'ADD_TODO', text: this.state.text, id: this.state.id });
+    this.setState({id: ++this.state.id, text: ''});
   }
 
 
-  onPressDecrement = () => {
+  onPressToggle = (id) => {
 
-    store.dispatch({ type: 'DECREMENT' });
+    store.dispatch({ type: 'TOGGLE_TODO', id: id });
+  }
+
+  onChangeText = (text) => {
+
+    this.setState({ text: text });
   }
 
 
   render() {
 
-    const { value } = store.getState();
+    const { todos } = store.getState();
 
-    console.log('value', value)
+    //console.log('value', value)
 
     const { params } = this.props.navigation.state;
 
@@ -53,12 +64,13 @@ class CounterScreen extends React.Component {
       <View style={styles.container}>
 
 
-        <CounterApp
-          value={value.current}
-          onPressIncrement={this.onPressIncrement}
-          onPressDecrement={this.onPressDecrement}
-          logs={value.logs}
+        <TodoApp
+          onPressAdd={this.onPressAdd}
+          onPressToggle={this.onPressToggle}
+          onChangeText={this.onChangeText}
+          todos={todos}
           user={params.user}
+          valeu={this.state.text}
 
         />
       </View>
@@ -75,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CounterScreen;
+export default TodoScreen;
