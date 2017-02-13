@@ -2,11 +2,12 @@ import React from 'react';
 import {
   View,
   Text,
-  TouchableHighlight,
+  TouchableWithoutFeedback,
   StyleSheet,
   Dimensions,
   ScrollView,
   TextInput,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -17,109 +18,180 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  interaction: {
-    flex:1,
+  addContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     width: width,
-    backgroundColor: 'gray',
-    borderWidth: 2,
     paddingHorizontal: 30,
+    paddingVertical: 20,
+  },
+  textInput: {
+    flex: 1,
+    height: 50,
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderColor: '#cccccc',
+    fontSize: 17,
+    color: 'rgba(43,45,46,1)',
   },
   todosContainer: {
     flex: 4,
     width: width,
-    borderWidth: 7,
-    borderColor: 'yellow',
     alignItems: 'center',
+  },
+  todosHeader: {
+    flexDirection: 'row',
+    width: width,
+    backgroundColor: 'rgba(43,45,46,1)',
+    padding: 30,
+  },
+  checklist: {
+    width: 25,
+    height: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 7,
+    borderWidth: 2,
+    borderColor: '#cccccc',
+    marginRight: 30,
+  },
+  todosHeaderTitle: {
+    color: '#cccccc',
+    fontSize: 20,
+    fontWeight: '300',
+  },
+  todosHeaderOption: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '300',
+  },
+  todosVisibility: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: width,
     paddingHorizontal: 30,
+    marginTop: 10,
+  },
+  visibilityText: {
+    color: 'rgba(255, 90, 95, 1)',
+    fontWeight: 'bold',
   },
   todoRow: {
     flexDirection: 'row',
-    width: width,
-    justifyContent: 'space-between',
+    width: width - 60,
     marginTop: 10,
-
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#cccccc',
+    marginBottom: 30,
   },
-  button: {
-    width: 40,
-    height: 40,
+  addButton: {
+    width: 50,
+    height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 50,
-  },
-  add: {
-    backgroundColor: 'green',
+    backgroundColor: 'rgba(255, 90, 95, 1)',
     marginLeft: 30,
   },
-  toggle: {
-    backgroundColor: 'red',
-    //marginRight: 30,
+  addButtonText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
-  textInteraction: {
-    fontSize: 15,
-  },
-  resultContainer: {
-    width: 40,
-    height: 40,
-    backgroundColor: 'white',
+  toggleButton: {
+    width: 25,
+    height: 25,
     alignItems: 'center',
     justifyContent: 'center',
-
+    borderRadius: 7,
+    borderWidth: 2,
+    borderColor: '#cccccc',
+    marginRight: 30,
+    marginBottom: 10,
   },
-  toggleText: {
-    color: 'red',
+  todoText: {
+    fontSize: 17,
+    color: 'rgba(72,72,72, 1)',
+    marginBottom: 10,
   },
-  actionText: {
-    color: 'blue',
+  completedText: {
+    color: 'rgba(172,172,172, 1)',
+    textDecorationLine: 'line-through',
   },
-  newText: {
-    color: 'green',
-    textAlign: 'center',
+  completedButton: {
+    backgroundColor: 'rgba(0,166,153, 1)',
+    borderColor: 'rgba(0,166,153, 1)',
   },
-  test: {
-    backgroundColor: 'blue',
+  completedTextButton: {
+    fontSize: 14,
+    fontWeight: '300',
+    fontStyle: 'italic',
+    color: 'white',
   },
 });
 
-
-
-
 const {
   container,
-  interaction,
+  addContainer,
+  textInput,
   todosContainer,
+  todosHeader,
+  checklist,
+  todosHeaderTitle,
+  todosHeaderOption,
+  todosVisibility,
+  visibilityText,
   todoRow,
-  toggleText,
-  actionText,
-  newText,
-  button,
-  add,
-  toggle,
-  textInteraction,
-  resultContainer,
-  test,
+  addButton,
+  addButtonText,
+  toggleButton,
+  todoText,
+  completedText,
+  completedButton,
+  completedTextButton,
 } = styles;
 
+const checklistIcon = (
+  <View style={checklist}>
+    <Text style={completedTextButton}>V</Text>
+  </View>
+);
 
-const renderTodos = (todos, onPressToggle) => {
-  console.log('todos', todos)
-  let numberOfTodos = 0;
+const renderTodos = (todos, onPressToggle, showCompleted) => {
   return todos.map( todo => {
-    return (
-      <View key={numberOfTodos++} style={todoRow}>
-        <View style={[]}>
-          <Text style={[textInteraction, todo.completed && toggleText ]}>{todo.text}</Text>
-        </View>
 
-        <TouchableHighlight onPress={() => onPressToggle(todo.id)}>
-          <View style={[button, toggle]}>
-            <Text style={textInteraction}>Toggle</Text>
+    const { text, id, completed } = todo;
+    const todoTextStyle = [
+      todoText,
+      completed && completedText
+    ];
+    const toggleButtonStyle = [
+      toggleButton,
+      completed && completedButton
+    ];
+
+    const showTodoItem = (
+      <View key={id} style={todoRow}>
+
+        <TouchableWithoutFeedback onPress={() => onPressToggle(id)}>
+          <View style={toggleButtonStyle}>
+            {completed  && <Text style={completedTextButton}>V</Text>}
           </View>
-        </TouchableHighlight>
+        </TouchableWithoutFeedback>
+
+        <Text style={todoTextStyle}>{text}</Text>
 
       </View>
+    );
+
+    return (
+      !completed
+      ? showTodoItem
+      : showCompleted && showTodoItem
     );
   });
 }
@@ -128,43 +200,63 @@ const TodoApp = ({
   onPressAdd,
   onPressToggle,
   onChangeText,
-  textValue,
+  onPressVisibility,
+  showCompleted,
+  value,
   todos,
   user
 }) => {
 
+  const visibilityTitle = showCompleted
+    ? 'Show'
+    : 'Hide';
 
   return(
-
       <View style={container}>
 
-        <View style={interaction}>
+        <View style={addContainer}>
           <TextInput
-            style={[{backgroundColor: 'white', height: 60, flex: 1, alignSelf: 'center'}]}
+            style={textInput}
             onChangeText={onChangeText}
-            value={textValue}
+            value={value}
+            placeholder='Add an item ...'
+            underlineColorAndroid='transparent'
+            autoCapitalize='sentences'
+            autoCorrect
+            returnKeyType='done'
+            onSubmitEditing={onPressAdd}
+            autoFocus
           />
 
-          <TouchableHighlight onPress={onPressAdd}>
-            <View style={[button, add]}>
-              <Text style={textInteraction}>Add</Text>
+          <TouchableWithoutFeedback onPress={onPressAdd}>
+            <View style={addButton}>
+              <Text style={addButtonText}>Add</Text>
             </View>
-          </TouchableHighlight>
-
-
+          </TouchableWithoutFeedback>
         </View>
+
         <View style={todosContainer}>
-          <Text style={{fontSize: 22}}>{`${user}'s To-dos`}</Text>
+          <View style={todosHeader} >
+            {checklistIcon}
+            <Text style={todosHeaderTitle}>{`${user}'s checklist`}</Text>
+          </View>
+
+          <View style={todosVisibility} >
+            <Text
+              onPress={onPressVisibility}
+              style={visibilityText}
+            >
+              {`${visibilityTitle} completed items`}
+            </Text>
+          </View>
 
           <ScrollView>
-          {renderTodos(todos, onPressToggle)}
+            {renderTodos(todos, onPressToggle, showCompleted)}
           </ScrollView>
-
         </View>
+
       </View>
-
-
-  );
+    );
 };
 
 export default TodoApp;
