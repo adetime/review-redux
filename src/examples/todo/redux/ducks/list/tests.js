@@ -1,8 +1,8 @@
 import { createStore } from 'redux';
 import deepFreeze from 'deep-freeze';
-import TodosListReducer from './TodosListReducer'
+import reducer from './';
 
-const store = createStore( TodosListReducer );
+const store = createStore( reducer );
 
 
 describe('Todos List Reducer', () => {
@@ -27,7 +27,7 @@ describe('Todos List Reducer', () => {
     deepFreeze(action);
 
     expect(
-      TodosListReducer(stateBefore, action)
+      reducer(stateBefore, action)
     ).toEqual(stateAfter)
 
 
@@ -70,7 +70,7 @@ describe('Todos List Reducer', () => {
     deepFreeze(action);
 
     expect(
-      TodosListReducer(stateBefore, action)
+      reducer(stateBefore, action)
     ).toEqual(stateAfter)
 
   });

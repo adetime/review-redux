@@ -1,5 +1,7 @@
 import deepFreeze from 'deep-freeze';
 
+import reducer from './reducers';
+
 const toggleTodo = (todo) => {
   return {...todo, completed: !todo.completed}
 }

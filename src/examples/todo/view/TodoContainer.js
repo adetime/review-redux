@@ -4,18 +4,12 @@ import {
   Text,
   View,
 } from 'react-native';
-
-import { createStore } from 'redux';
+import { connect } from 'react-redux';
 
 import TodoApp from './TodoApp';
-import reducers from './../redux/reducers';
 
 
-// Create a store for counter reducer example
-const store = createStore(reducers);
-
-
-class TodoScreen extends React.Component {
+class TodoContainer extends React.Component {
   static navigationOptions = {
     title: ({ state }) => `${state.params.user}, test this todo`,
   };
@@ -27,23 +21,20 @@ class TodoScreen extends React.Component {
   };
 
   componentWillMount(){
-    store.subscribe(this.update)
+  //  store.subscribe(this.update)
   }
 
-  update = () => {
-    this.forceUpdate();
-  }
 
   onPressAdd = ( ) => {
 
-    store.dispatch({ type: 'ADD_TODO', text: this.state.text, id: this.state.id });
-    this.setState({id: ++this.state.id, text: ''});
+    //store.dispatch({ type: 'ADD_TODO', text: this.state.text, id: this.state.id });
+    //this.setState({id: ++this.state.id, text: ''});
   }
 
 
   onPressToggle = (id) => {
 
-    store.dispatch({ type: 'TOGGLE_TODO', id: id });
+    //store.dispatch({ type: 'TOGGLE_TODO', id: id });
   }
 
   onPressVisibility = () => {
@@ -60,13 +51,13 @@ class TodoScreen extends React.Component {
 
   render() {
 
-    const { todos } = store.getState();
+    //const { todos } = store.getState();
 
     //console.log('value', value)
 
-    const { params } = this.props.navigation.state;
+    //const { params } = this.props.navigation.state;
 
-    console.log('params', params)
+    //console.log('params', params)
 
     return (
       <View style={styles.container}>
@@ -75,8 +66,8 @@ class TodoScreen extends React.Component {
           onPressAdd={this.onPressAdd}
           onPressToggle={this.onPressToggle}
           onChangeText={this.onChangeText}
-          todos={todos}
-          user={params.user}
+          todos={this.props.todos}
+        //  user={params.user}
           value={this.state.text}
           onPressVisibility={this.onPressVisibility}
           showCompleted={this.state.showCompleted}
@@ -96,4 +87,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TodoScreen;
+const mapStateToProps = ({reducer}) => {
+  console.log('state = ', reducer)
+  return { todos: reducer };
+};
+
+export default connect(mapStateToProps, {})(TodoContainer);

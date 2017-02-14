@@ -1,4 +1,4 @@
-export default TodoReducer = ( state = {}, action ) => {
+export default todoReducer = ( state = {}, action ) => {
   switch(action.type) {
     case 'ADD_TODO':
       return {
