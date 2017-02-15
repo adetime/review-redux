@@ -10,9 +10,6 @@ import TodoApp from './TodoApp';
 
 
 class TodoContainer extends React.Component {
-  static navigationOptions = {
-    title: ({ state }) => `${state.params.user}, test this todo`,
-  };
 
   state = {
     text: '',
@@ -21,14 +18,15 @@ class TodoContainer extends React.Component {
   };
 
   componentWillMount(){
-  //  store.subscribe(this.update)
+
+
   }
 
 
   onPressAdd = ( ) => {
 
     //store.dispatch({ type: 'ADD_TODO', text: this.state.text, id: this.state.id });
-    //this.setState({id: ++this.state.id, text: ''});
+
   }
 
 
@@ -51,13 +49,11 @@ class TodoContainer extends React.Component {
 
   render() {
 
-    //const { todos } = store.getState();
 
-    //console.log('value', value)
 
-    //const { params } = this.props.navigation.state;
+    console.log('TodoContainer/ this.props', this.props)
 
-    //console.log('params', params)
+    const { params } = this.props.navigation.state;
 
     return (
       <View style={styles.container}>
@@ -66,8 +62,8 @@ class TodoContainer extends React.Component {
           onPressAdd={this.onPressAdd}
           onPressToggle={this.onPressToggle}
           onChangeText={this.onChangeText}
-          todos={this.props.todos}
-        //  user={params.user}
+          todos={this.props.todos.todos}
+          user={params.user}
           value={this.state.text}
           onPressVisibility={this.onPressVisibility}
           showCompleted={this.state.showCompleted}
@@ -87,9 +83,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({reducer}) => {
-  console.log('state = ', reducer)
-  return { todos: reducer };
+const mapStateToProps = ({todos}) => {
+  console.log('view/TodoContainer.js, state by reducer todos = ', todos)
+  return { todos: todos };
 };
 
 export default connect(mapStateToProps, {})(TodoContainer);

@@ -1,19 +1,22 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 
-import { combineReducers } from 'redux';
-
-//import reducer from './ducks'
-
-import reducer from './ducks/list'
+import * as reducers from './ducks'
 
 
-console.log('reducers on store = ', reducer)
+
+console.log('/redux/store.js, reducers = ', reducers)
+const rootReducer = combineReducers({
+  todos: reducers.todos
+});
+
+console.log('/redux/store.js, rootReducer = ', rootReducer)
 
 export default function configureStore() {
-  const rootReducer = combineReducers({
-    reducer,
-  });
+
+
 
   return createStore(rootReducer);
 
 }
+
+console.log('/redux/store.js, createStore = ', configureStore())

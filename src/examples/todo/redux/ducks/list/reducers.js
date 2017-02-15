@@ -1,22 +1,34 @@
+import { combineReducers } from 'redux';
+
+import types from './types';
 import todo from './../';
 
-const todoList = ( state = [], action ) => {
+
+
+const TodosReducer = ( state = [], action ) => {
 
   switch (action.type) {
-    case 'ADD_TODO':
+    case types.ADD:
       return [
         ...state,
         todo(undefined, action)
       ];
 
-    case 'TOGGLE_TODO':
+    case types.TOGGLE:
       return state.map( todo => todo(todo, action) );
 
     default:
       return state;
 
   }
-
 }
 
-export default todoList;
+console.log('ducks/list/reducers.js, TodosReducer', TodosReducer(undefined, {type: 'bjdwell'}))
+
+
+const reducer = combineReducers({
+  todos: TodosReducer
+});
+
+console.log('ducks/list/reducers.js, reducer = combineReducers = ', reducer);
+export {reducer};
